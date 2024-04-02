@@ -1,0 +1,139 @@
+header {
+    width: 100%;
+    height: 50px;
+    background-color: #9a2124;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+}
+  
+body {
+    font-family: Helvetica;
+    color: black;
+    background-image:url('https://t3.ftcdn.net/jpg/02/77/30/98/360_F_277309825_h8RvZkoyBGPDocMtippdfe3497xTrOXO.jpg');
+    margin: 0;
+}
+  
+h1 {
+    margin-left: 1vw;
+    font-size: min(5vw, 1.25em);
+    text-align: center;
+    color: #f2f3f4;
+}
+  
+h1 > a {
+    color: inherit;
+    text-decoration: none;
+}
+  
+h1:hover {
+    background-color: #f2f3f4;
+    color: #9a2124;
+    cursor: pointer;
+    border-radius: 2px;
+}
+  
+nav {
+    width: 30%;
+    height: 50px;
+}
+  
+nav > ul {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-inline-start: 0;
+    margin-block: 0;
+    height: 100%;
+}
+  
+nav > ul > li {
+    margin: 0 0.2rem;
+    padding: 0.2rem;
+    display: block;
+    color: #f2f3f4;
+}
+  
+nav > ul > li:hover {
+    background-color: #f2f3f4;
+    color: #9a2124;
+    cursor: pointer;
+    border-radius: 2px;
+}
+  
+li > a {
+    color: inherit;
+    text-decoration: none;
+}
+  
+main {
+    padding-top: 50px;
+}
+  
+h2 {
+    width: 80%;
+    margin: 10px auto;
+    text-align: center;
+    border-bottom: 4px solid #303034;
+}
+  
+h2, section {
+    background-color: #f8f0e3bb;
+}
+  
+section {
+    width: 80%;
+    margin: 0 auto 10px;
+    padding-bottom: 1px;
+}
+  
+.spacer {
+    margin: 30px;
+}
+  
+.info {
+    padding: 10px 0 0 5px;
+}
+  
+.info label,.info input, .info p {
+    display: inline-block;
+}
+  
+.info input, .info p {
+    border-radius: 3px;
+    width: 20%;
+    text-align: left;
+}
+  
+.info label {
+    width: 50%;
+    min-width: 55px;
+    text-align: right;
+    margin-right: 5px;
+}
+  
+.info input {
+    min-height: 18px;
+}
+  
+p {
+    margin: 0;
+}
+
+.info h4 {
+    text-align: center;
+    margin: 0 0 10px;
+}
+  
+button {
+    display: block;
+    width: 10vw;
+    min-width: 60px;
+    height: 2.5vh;
+    min-height: 30px;
+    margin: 10px auto;
+    border-radius: 5px;
+}
