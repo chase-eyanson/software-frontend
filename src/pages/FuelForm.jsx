@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const FuelForm = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[1];
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     gallonsRequested: '',
     deliveryAddress: '',
-    deliveryDate: '',
     state: '',
+    deliveryDate: '',
   });
 
   const [fuelQuotes, setFuelQuotes] = useState([]);
@@ -19,18 +20,24 @@ const FuelForm = () => {
     fetchFuelQuoteHistory();
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const handleChange = (e) =>{
+    setFormData(prev=>({...prev, [e.target.name]: e.target.value }))
+  }
 
   const handleOrderSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(`/fuel-quote/${id}`, formData);
+      // Parse gallonsRequested as an integer
+      const gallonsRequested = parseInt(formData.gallonsRequested);
+      // Check if gallonsRequested is a valid number
+      if (isNaN(gallonsRequested)) {
+        alert("Please enter a valid number for gallons requested");
+        return;
+      }
+      const response = await axios.post(`http://localhost:80/fuel-quote/${id}`, { ...formData, gallons: gallonsRequested });
       if (response.data.success) {
         alert("Fuel quote added successfully");
-        fetchFuelQuoteHistory();
+        navigate(`/${id}/fuel-form`);
       } else {
         alert("Failed to add fuel quote");
       }
@@ -41,9 +48,19 @@ const FuelForm = () => {
 
   const fetchFuelQuoteHistory = async () => {
     try {
-      const response = await axios.get(`/fuel-quote/${id}`);
+      const response = await axios.get(`http://localhost:80/fuel-quote/${id}`);
       if (response.data.success) {
-        setFuelQuotes(response.data.userQuotes);
+        const userQuotes = response.data.userQuotes.map(quote => ({
+          ...quote,
+          date: new Date(quote.date).toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+          }),
+          pricePerGallon: `$${quote.pricePerGallon.toFixed(2)}`, 
+          totalPrice: <b>{`$${quote.totalPrice.toFixed(2)}`}</b> 
+        }));
+        setFuelQuotes(userQuotes);
       } else {
         alert("Failed to fetch fuel quote history");
       }
@@ -69,15 +86,15 @@ const FuelForm = () => {
           <section>
             <div className="info">
               <label htmlFor="gallons">Enter the desired amount of fuel in gallons:</label>
-              <input name="gallonsRequested" id="gallons" type="number" required value={formData.gallonsRequested} onChange={handleChange} />
+              <input name="gallonsRequested" id="gallons" type="number" required onChange={handleChange} />
             </div>
             <div className="info">
               <label htmlFor="address">Enter your delivery address:</label>
-              <input name="deliveryAddress" id="address" type="text" required value={formData.deliveryAddress} onChange={handleChange} />
+              <input name="deliveryAddress" id="address" type="text" required onChange={handleChange} />
             </div>
             <div className="info">
               <label htmlFor="state">State: </label>
-              <select id="state" name="state" required onChange={handleChange} value={formData.state}>
+              <select id="state" name="state" required onChange={handleChange}>
                 <option value="">Select a state...</option>
                 <option value="AK">Alaska</option>
                 <option value="CO">Colorado</option>
