@@ -22,9 +22,9 @@ const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`http://localhost:80/profile/${id}`, formData); // Assuming endpoint to update user profile
-            console.log('Profile updated successfully');
-            navigate(`/${id}/profile`)
+            await axios.put(`http://localhost:80/profile/${id}`, formData);
+            alert('Profile updated successfully');
+            window.location.reload(); // Refresh the page
         } catch (error) {
             console.error('Error updating profile:', error);
         }

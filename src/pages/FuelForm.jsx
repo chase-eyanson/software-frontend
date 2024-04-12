@@ -37,7 +37,7 @@ const FuelForm = () => {
       const response = await axios.post(`http://localhost:80/fuel-quote/${id}`, { ...formData, gallons: gallonsRequested });
       if (response.data.success) {
         alert("Fuel quote added successfully");
-        navigate(`/${id}/fuel-form`);
+        window.location.reload();
       } else {
         alert("Failed to add fuel quote");
       }

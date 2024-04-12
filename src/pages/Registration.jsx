@@ -20,10 +20,18 @@ const Registration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
     try {
-      const response = await axios.post('http://localhost:80/register', formData); // Adjust URL if needed
-      console.log(response.data);
-      navigate("/");
+      const response = await axios.post('http://localhost:80/register', formData);
+      if (response.data.success) {
+        alert("Registration successful");
+        navigate("/");
+      } else {
+        alert("Registration failed");
+      }
     } catch (error) {
       console.error('Error during registration:', error);
     }
