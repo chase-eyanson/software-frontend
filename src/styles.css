@@ -137,3 +137,27 @@ button {
     margin: 10px auto;
     border-radius: 5px;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f2f2f2; /* Light gray background for table header */
+  }
+  
+  /* Alternating row background colors */
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Light gray */
+  }
+  
+  tbody tr:nth-child(odd) {
+    background-color: #fff; /* White */
+  }
