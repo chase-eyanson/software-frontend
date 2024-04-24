@@ -1,3 +1,4 @@
+// Frontend
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -12,6 +13,8 @@ const FuelForm = () => {
     deliveryAddress: '',
     state: '',
     deliveryDate: '',
+    suggestedPricePerGallon: '',
+    totalPrice: ''
   });
 
   const [fuelQuotes, setFuelQuotes] = useState([]);
@@ -69,6 +72,33 @@ const FuelForm = () => {
     }
   };
 
+  const handleGetQuote = async () => {
+    const gallonsRequested = parseInt(formData.gallonsRequested);
+    if (isNaN(gallonsRequested)) {
+      alert("Please enter a valid number for gallons requested");
+      return;
+    }
+    const state = formData.state;
+    const hasHistory = fuelQuotes.length > 0; // Assuming if there are any quotes, then the user has history
+    
+    try {
+      const response = await axios.post(`http://localhost:80/calculate-price`, { gallonsRequested, state, hasHistory });
+      if (response.data.success) {
+        const totalPrice = response.data.totalPrice;
+        const suggestedPricePerGallon = totalPrice / gallonsRequested;
+        setFormData(prev => ({
+          ...prev,
+          suggestedPricePerGallon,
+          totalPrice
+        }));
+      } else {
+        alert("Failed to calculate price");
+      }
+    } catch (error) {
+      console.error("Error calculating price:", error);
+    }
+  };
+
   return (
     <>
       <header>
@@ -111,12 +141,13 @@ const FuelForm = () => {
             <div className="spacer"></div>
             <div className="info">
               <label>Suggested price per gallon:</label>
-              <p><i>$2.5 per gallon</i></p>
+              <p><i>${formData.suggestedPricePerGallon ? formData.suggestedPricePerGallon.toFixed(2) : ''}</i></p>
             </div>
             <div className="info">
               <label>Total Amount Due: </label>
-              <p><i>${formData.gallonsRequested * 2.5}</i></p>
+              <p><i>${formData.totalPrice ? formData.totalPrice.toFixed(2) : ''}</i></p>
             </div>
+            <button type="button" onClick={handleGetQuote}>Get Quote</button>
             <button type="submit">Order</button>
           </section>
           <h2>Fuel Quote History</h2>
