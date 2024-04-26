@@ -60,7 +60,7 @@ const FuelForm = () => {
             month: 'long',
             year: 'numeric'
           }),
-          pricePerGallon: `$${quote.pricePerGallon.toFixed(2)}`, 
+          pricePerGallon: `$${quote.pricePerGallon.toFixed(3)}`, 
           totalPrice: <b>{`$${quote.totalPrice.toFixed(2)}`}</b> 
         }));
         setFuelQuotes(userQuotes);
@@ -102,7 +102,7 @@ const FuelForm = () => {
   return (
     <>
       <header>
-        <h1><Link to="/">Group 74 Software Design Project</Link></h1>
+        <h1><Link to="/">Fuel Ordering Project</Link></h1>
         <nav>
           <ul>
             <li><Link to={`/${id}/profile`}>Profile</Link></li>
@@ -141,7 +141,7 @@ const FuelForm = () => {
             <div className="spacer"></div>
             <div className="info">
               <label>Suggested price per gallon:</label>
-              <p><i>${formData.suggestedPricePerGallon ? formData.suggestedPricePerGallon.toFixed(2) : ''}</i></p>
+              <p><i>${formData.suggestedPricePerGallon ? formData.suggestedPricePerGallon.toFixed(3) : ''}</i></p>
             </div>
             <div className="info">
               <label>Total Amount Due: </label>

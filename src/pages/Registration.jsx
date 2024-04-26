@@ -40,7 +40,7 @@ const Registration = () => {
   return (
     <>
       <header>
-        <h1><Link to="/">Group 74 Software Design Project</Link></h1>
+        <h1><Link to="/">Fuel Ordering Project</Link></h1>
       </header>
       <main>
         <h2>Registration</h2>

@@ -21,7 +21,7 @@ const Login = () => {
   return (
       <>
         <header>
-          <h1>Group 74 Software Design Project</h1>
+          <h1>Fuel Ordering Project</h1>
         </header>
         <main>
           <h2>Login</h2>
